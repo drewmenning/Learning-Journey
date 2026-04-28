@@ -12,3 +12,6 @@ data/*.csv
 !data/.gitkeep
 .vscode/
 .idea/
+slide_qa/
+*.html
+

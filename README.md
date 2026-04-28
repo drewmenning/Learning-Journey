@@ -59,7 +59,10 @@ The AI4I 2020 dataset is synthetic and does not contain personal data, so privac
 
 ## Presentation
 
-Slides and speaker notes are in `presentation/`. A recorded walkthrough is linked in Canvas.
+Seven-slide deck with speaker notes covering the problem, dataset, approach, model comparison, test results, the Type H bias finding, and reflection.
+
+- PowerPoint: [presentation/AAI201 Capstone Predictive Maintenance Drew Menning.pptx](presentation/AAI201%20Capstone%20Predictive%20Maintenance%20Drew%20Menning.pptx)
+- PDF: [presentation/AAI201 Capstone Predictive Maintenance Drew Menning.pdf](presentation/AAI201%20Capstone%20Predictive%20Maintenance%20Drew%20Menning.pdf)
 
 ## Author
 
