@@ -42,7 +42,7 @@ pip install numpy matplotlib scikit-learn jupyter
 jupyter notebook dimensionality_reduction.ipynb
 ```
 
-Run the cells in order, locally or in Google Colab. Iris loads through scikit-learn's `load_iris`, so there is no separate data file. The original .ipynb was plain text, not notebook JSON, so GitHub could not render it. I rebuilt it as a real notebook with the same text and code, restoring only the indentation that two for-loops had lost. Outputs are from a clean run on October 14, 2026 on Python 3.13.16.
+Run the cells in order, locally or in Google Colab. Iris loads through scikit-learn's `load_iris`, so there is no separate data file. Outputs are from a clean run on October 14, 2026 on Python 3.13.16.
 
 ## Files
 
