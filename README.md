@@ -1,6 +1,6 @@
 # Data augmentation on Fashion-MNIST: baseline CNN vs. augmented CNN
 
-I trained the same small convolutional network twice on Fashion-MNIST: once on the raw images, and once with random rotation, zoom and translation applied during training. The question was whether augmentation improves generalization. Here it did not: after 5 epochs, test accuracy on the 10,000 held-out images fell from 89.4% for the baseline to 82.1% with augmentation, a drop of 7.3 points. The repo name comes from the module title; there is no generative model here, just a controlled comparison of two classifiers.
+I trained the same small convolutional network twice on Fashion-MNIST: once on the raw images, and once with random rotation, zoom and translation applied during training. The question was whether augmentation improves generalization. Here it did not: after 5 epochs, test accuracy on the 10,000 held-out images fell from 89.4% for the baseline to 82.1% with augmentation, a drop of 7.3 points. The repo is named after the course module; the work itself is a controlled comparison of two classifiers.
 
 ![Validation accuracy by epoch for both models](images/validation-accuracy.png)
 
