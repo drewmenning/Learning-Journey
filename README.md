@@ -25,7 +25,6 @@ The gap is four passengers out of 143 (115 right against 111). The error pattern
 
 ## What I learned
 
-- Part B's printed note calls Naive Bayes "not the most accurate here," but on this split it was the more accurate model. I left the note as written.
 - Gaussian Naive Bayes treats the encoded sex and class columns as bell-shaped measurements, which they are not. A Naive Bayes variant built for categories is the first thing I would try next.
 - One random split of 143 test passengers with no cross-validation means a 2.8 point gap could flip with a different random_state.
 - Part D's reflection says predictions are estimates, not guarantees. The tree's own errors show why: it predicted death for 103 of the 143 test passengers when only 79 died.
@@ -43,7 +42,7 @@ Run all cells from the top. The saved outputs come from a clean run on October 1
 
 ## Files
 
-- [probability-bayes-decision-trees.ipynb](probability-bayes-decision-trees.ipynb): the notebook, Parts A to D, with saved outputs. Until October 2026 it was one unrun code cell named `m6 assignment.ipynb`; I split it into cells by part, with the code unchanged, and ran it.
+- [probability-bayes-decision-trees.ipynb](probability-bayes-decision-trees.ipynb): the notebook, Parts A to D, with saved outputs. Until October 2026 it was one unrun code cell named `m6 assignment.ipynb`. I split it into cells by part, corrected one printed note that called Naive Bayes the less accurate model (the reverse of the result), and ran it.
 - `images/decision-tree.png`: the tree plot from Part C.
 - `README.md`: this file.
 
