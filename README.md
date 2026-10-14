@@ -38,7 +38,7 @@ Shirt is the weak spot: recall 0.48 on 300 test shirts, with 74 called Pullover,
 The notebook was built in Google Colab on Python 3.11. Fashion-MNIST downloads through `tensorflow.keras.datasets.fashion_mnist.load_data()` on first use, so no data files are bundled.
 
 ```bash
-pip install tensorflow scikit-learn pandas matplotlib numpy
+pip install tensorflow scikit-learn pandas matplotlib numpy jupyter
 jupyter notebook m12_assignment.ipynb
 ```
 
