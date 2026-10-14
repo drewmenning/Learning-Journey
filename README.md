@@ -7,7 +7,7 @@ This repo is an index, in the order I built them, of my spring 2026 coursework r
 | 1 | [week3-dimensionality-reduction](https://github.com/drewmenning/week3-dimensionality-reduction) | M3 | PCA and t-SNE on Iris | Feb 2026 |
 | 2 | [week4-data-exploration-ml](https://github.com/drewmenning/week4-data-exploration-ml) | Week 4 | Exploration, encoding, a new feature and logistic regression on the Adult census income data | Feb 2026 |
 | 3 | [probability-bayes-decision-trees](https://github.com/drewmenning/probability-bayes-decision-trees) | M6 | Binomial simulation, conditional probability, Naive Bayes and a decision tree on Titanic data | Feb 2026 |
-| 4 | [clustering-hands-on](https://github.com/drewmenning/clustering-hands-on) | | K-Means and DBSCAN on Iris | Mar 2026 |
+| 4 | [clustering-hands-on](https://github.com/drewmenning/clustering-hands-on) | AAI 201 | K-Means and DBSCAN on Iris | Mar 2026 |
 | 5 | [rl-qlearning-assignment](https://github.com/drewmenning/rl-qlearning-assignment) | M9 | Tabular Q-learning on Gymnasium's Taxi-v3 | Mar 2026 |
 | 6 | [neural-networks-generative-ai-assignment](https://github.com/drewmenning/neural-networks-generative-ai-assignment) | Module 10 | A Keras CNN with and without data augmentation on Fashion-MNIST | Mar 2026 |
 | 7 | [deep-learning-architectures](https://github.com/drewmenning/deep-learning-architectures) | M11 | An MLP, a CNN and an LSTM in PyTorch | Apr 2026 |
