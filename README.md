@@ -50,7 +50,7 @@ pip install -r requirements.txt
 jupyter notebook predictive_maintenance.ipynb
 ```
 
-Run all cells top to bottom; the notebook finishes in under two minutes on a laptop. It fetches the AI4I 2020 dataset (UCI id 601) through the `ucimlrepo` package, with a direct CSV fallback, so there is nothing to download by hand. `RANDOM_STATE = 42` fixes the split and the model seeds.
+Run all cells top to bottom. The notebook fetches the AI4I 2020 dataset (UCI id 601) through the `ucimlrepo` package, with a direct CSV fallback, so there is nothing to download by hand. `RANDOM_STATE = 42` fixes the split and the model seeds.
 
 To rebuild the slide deck (python-pptx is not in `requirements.txt`):
 
@@ -62,7 +62,7 @@ python build_deck.py
 ## Files
 
 - [predictive_maintenance.ipynb](predictive_maintenance.ipynb): the notebook with saved outputs.
-- [predictive_maintenance.html](predictive_maintenance.html): HTML export of the executed notebook, for reading the outputs in a browser without running anything.
+- [predictive_maintenance.html](predictive_maintenance.html): HTML export of the executed notebook. Download it and open it in a browser to read the outputs without Jupyter.
 - `images/`: the two figures used in this README.
 - `presentation/`: the seven-slide capstone deck with speaker notes, as [PPTX](presentation/AAI201%20Capstone%20Predictive%20Maintenance%20Drew%20Menning.pptx) and [PDF](presentation/AAI201%20Capstone%20Predictive%20Maintenance%20Drew%20Menning.pdf).
 - [build_deck.py](build_deck.py): rebuilds the PowerPoint with python-pptx.

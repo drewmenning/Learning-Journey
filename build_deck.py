@@ -186,7 +186,8 @@ for name, sub in items_tech:
 
 add_notes(s, "I built up from simple to complex. Logistic regression and a depth-limited decision "
              "tree gave me a floor. Then Random Forest and HistGradientBoosting as the ensembles. "
-             "All four use balanced class weights to address the 3.4 percent failure rate. The "
+             "The first three use balanced class weights to address the 3.4 percent failure rate; the "
+             "booster has none and relies on the tuned threshold. The "
              "boosting model uses validation-based early stopping, which addresses my proposal "
              "feedback about avoiding leakage in early stopping. I deliberately did not use SMOTE; "
              "the dataset is already synthetic, so synthesizing minority samples on top would just "
@@ -240,14 +241,14 @@ add_text(s, side_x + Inches(0.25), side_y + Inches(0.8), side_w - Inches(0.5), I
          "ROC-AUC stays high on imbalanced data because true negatives dominate. PR-AUC ignores those and rewards models that actually rank failures high.",
          font=BODY_FONT, size=12, color=SAND, line_spacing=1.3)
 add_text(s, side_x + Inches(0.25), side_y + Inches(3.3), side_w - Inches(0.5), Inches(0.5),
-         "HGB wins on mean and variance.", font=HEADER_FONT, size=14, bold=True, color=TEAL)
+         "HGB has the best mean.", font=HEADER_FONT, size=14, bold=True, color=TEAL)
 add_text(s, side_x + Inches(0.25), side_y + Inches(3.85), side_w - Inches(0.5), Inches(1.3),
-         "0.759 mean PR-AUC with the smallest spread (±0.026), so the choice is stable across folds, not lucky.",
+         "0.759 mean PR-AUC (±0.026), well ahead of Random Forest at 0.675.",
          font=BODY_FONT, size=12, color=SAND, line_spacing=1.3)
 
 add_notes(s, "Five-fold cross-validation on PR-AUC. Logistic regression and decision tree are the "
-             "baselines, and you can see ensembles pull ahead. HistGradientBoosting wins, with mean "
-             "PR-AUC of 0.759 and the smallest standard deviation, 0.026, so it's not a lucky split. "
+             "baselines, and you can see ensembles pull ahead. HistGradientBoosting wins with a mean "
+             "PR-AUC of 0.759 and a standard deviation of 0.026, well ahead of Random Forest at 0.675. "
              "I'm using PR-AUC instead of ROC-AUC because at 3.4 percent positive rate, ROC-AUC "
              "stays high almost by default. PR-AUC is the metric that actually penalizes a model "
              "for missing failures.")
@@ -384,7 +385,7 @@ add_rect(s, side_x, side_y, side_w, side_h, NAVY)
 add_text(s, side_x + Inches(0.25), side_y + Inches(0.25), side_w - Inches(0.5), Inches(0.5),
          "Why this matters", font=HEADER_FONT, size=18, bold=True, color=WHITE)
 add_text(s, side_x + Inches(0.25), side_y + Inches(0.85), side_w - Inches(0.5), Inches(3.4),
-         "H is the smallest grade in the dataset (only ~6%). With four real failures in "
+         "H is the smallest grade: 118 of the 1,501 validation machines. With four real failures in "
          "validation, the model has almost nothing to learn from. The result generalizes: any "
          "deployment plan would need stratified sampling, a separate H-specific model, or an "
          "explicit out-of-scope flag for that grade.",
@@ -421,13 +422,13 @@ def takeaway_card(x, y, w, h, header, body, accent=TEAL):
 
 takeaway_card(Inches(0.6), Inches(1.5), Inches(4.0), Inches(2.6),
               "What I learned",
-              "Threshold tuning and the right metric beat picking a fancier model. Decision Tree "
-              "with PR-AUC 0.59 was not far behind a tuned booster at 0.76. Class imbalance is "
-              "less about the model and more about how predictions are turned into decisions.")
+              "The model mattered more than the threshold. In cross-validation the booster's "
+              "PR-AUC was 0.76 against 0.59 for the decision tree, and tuning only moved the "
+              "cutoff from 0.5 to 0.496. PR-AUC split the models far more clearly than ROC-AUC.")
 takeaway_card(Inches(4.75), Inches(1.5), Inches(4.0), Inches(2.6),
               "Hardest decision",
-              "Choosing the failure threshold. Default 0.5 produced near-zero recall on imbalanced "
-              "data. F1-max on validation gave a defensible threshold (0.496) without needing a "
+              "Choosing the failure threshold. F1-max on validation picked 0.496, close to the "
+              "default 0.5, and lifted validation recall from 0.588 to 0.608 without needing a "
               "cost ratio I couldn't justify on synthetic data.")
 takeaway_card(Inches(8.9), Inches(1.5), Inches(4.0), Inches(2.6),
               "Honest limitation",
@@ -462,17 +463,26 @@ add_text(s, Inches(0.6), Inches(7.15), Inches(12.1), Inches(0.3),
          "github.com/drewmenning/ai4i-predictive-maintenance",
          font=BODY_FONT, size=12, italic=True, color=TEAL)
 
-add_notes(s, "The biggest thing I learned is that imbalanced classification is mostly about "
-             "thresholds and metrics, not about the model family. The decision tree at PR-AUC "
-             "0.59 was not far behind the tuned booster at 0.76, and the difference between a "
-             "useless and a useful model came from threshold choice, not model choice. The "
-             "hardest decision was picking the failure threshold; default 0.5 produced near-zero "
-             "recall, so I used the F1-max threshold from validation. Honest limitation: this is "
+add_notes(s, "The biggest thing I learned is that the model family mattered more than I expected. "
+             "In cross-validation the booster reached a PR-AUC of 0.76 against 0.59 for the "
+             "decision tree, while threshold tuning barely moved the cutoff, from 0.5 to 0.496, "
+             "and lifted validation recall from 0.588 to 0.608. The hardest decision was picking "
+             "the failure threshold without a real cost ratio, so I used the F1-max threshold "
+             "from validation. Honest limitation: this is "
              "a synthetic dataset, so the result is credible on AI4I but not a deployment "
              "guarantee. Next steps in priority order: validate on a real predictive-maintenance "
              "dataset like NASA C-MAPSS, replace F1 with a cost-based threshold, fix the Type H "
              "blind spot, and add drift monitoring. Thanks for watching, the GitHub link is on "
              "this slide.")
 
+import datetime
+now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None, microsecond=0)
+cp = prs.core_properties
+cp.author = "Drew Menning"
+cp.last_modified_by = "Drew Menning"
+cp.title = "Predicting Machine Failures on the AI4I 2020 Dataset"
+cp.created = now
+cp.modified = now
+cp.revision = 1
 prs.save(OUT_PATH)
 print(f"Saved: {OUT_PATH}")
