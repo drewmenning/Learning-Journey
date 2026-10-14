@@ -31,7 +31,7 @@ During training, the average reward over each 500-episode block went from -172.0
 
 ## What I learned
 
-- Most of the learning happened far earlier than I first wrote. My original reflection said the moving average did not settle until around episode 3,000 to 4,000, but the printed block averages show 5.95 by episode 1,000 and within a point of the final 7.67 by episode 1,500. I corrected the reflection in October 2026. Lesson: read the logged numbers before describing the plot.
+- Most of the learning happened early: the printed block averages show 5.95 by episode 1,000 and within a point of the final 7.67 by episode 1,500.
 - The 0.995 decay is fast for a 5,000-episode budget. Epsilon sat at its floor from episode 1,000 on, so the last 4,000 episodes ran almost fully greedy and lifted the block average only from 5.95 to 7.67. Next time I would try a slower decay or fewer episodes and compare.
 - The run is not exactly reproducible. I seeded NumPy with 42 but not the environment resets in the training loop or the random action sampler, so a rerun will not match these numbers exactly.
 - A lookup table only works because 500 states by 6 actions is small. A much larger state space would need a deep Q-network in its place.
@@ -41,7 +41,7 @@ During training, the average reward over each 500-episode block went from -172.0
 Taxi-v3 ships with Gymnasium, so there is nothing to download; `gym.make("Taxi-v3")` builds the environment. I ran the notebook in Google Colab on Python 3.10 with Gymnasium 1.2.3, and the first code cell installs Gymnasium. In Colab, upload the notebook and choose Runtime, then Run all. Locally:
 
 ```bash
-pip install gymnasium numpy matplotlib seaborn
+pip install gymnasium numpy matplotlib seaborn jupyter
 jupyter notebook rl_qlearning_assignment.ipynb
 ```
 
