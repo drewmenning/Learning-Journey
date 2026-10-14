@@ -1,6 +1,6 @@
 # A Logistic Regression Baseline on the Adult Census Income Data
 
-I took the Adult census income data from OpenML (48,842 rows, 15 columns) and one-hot encoded its categorical columns, then added one engineered feature. On those features I trained a logistic regression to predict whether income is `>50K` or `<=50K`. It scored 84.9% accuracy on the held-out 20% of rows, from a single fit with nothing to compare it against.
+I took the Adult census income data from OpenML (48,842 rows, 15 columns) and one-hot encoded its categorical columns, then added one engineered feature. On those features I trained a logistic regression to predict whether income is `>50K` or `<=50K`. It scored 84.9% accuracy on the held-out 20% of rows.
 
 ![Scatter of hours worked per week against age](images/hours-vs-age.png)
 
@@ -25,13 +25,13 @@ I took the Adult census income data from OpenML (48,842 rows, 15 columns) and on
 | Test split | 20% of rows, `random_state=42` |
 | Test accuracy | 84.9% (0.8491) |
 
-84.9% is the share of held-out rows where the model picked the right income class, and it is the only score in the notebook. I never recorded the class balance or a majority-class score, so I cannot say how much of that the model earns. Accuracy alone also hides how it does on the `>50K` class.
+84.9% is the share of held-out rows where the model picked the right income class. It is the only score in the notebook, so the next version needs a majority-class baseline and precision and recall on the `>50K` class to show how much of that the model earns.
 
 ## What I learned
 
 - In the notebook's closing cell I wrote that `long_hours` and the encoding improved the model. One fit cannot show that, and `long_hours` is only a cutoff on `hours-per-week`, which the model already sees. Next time I fit a plain baseline first and report the change.
-- I never dealt with the missing values directly. `get_dummies` turned a missing `workclass`, `occupation` or `native-country` into all zeros, which the model cannot tell from the level `drop_first` removed. An explicit missing category would fix that.
-- I never scaled the numeric columns, so `fnlwgt` sits in the hundreds of thousands next to True/False dummies. A scaler inside a pipeline would fix that and keep the test rows out of the fit.
+- Missing values went in as they were. `get_dummies` turned a missing `workclass`, `occupation` or `native-country` into all zeros, which the model cannot tell from the level `drop_first` removed. An explicit missing category would fix that.
+- The numeric columns went in unscaled, so `fnlwgt` sits in the hundreds of thousands next to True/False dummies. A scaler inside a pipeline would fix that and keep the test rows out of the fit.
 
 ## How to run
 
