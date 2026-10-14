@@ -29,7 +29,7 @@ I took the Adult census income data from OpenML (48,842 rows, 15 columns) and on
 
 ## What I learned
 
-- In the notebook's closing cell I wrote that `long_hours` and the encoding improved the model. One fit cannot show that, and `long_hours` is only a cutoff on `hours-per-week`, which the model already sees. Next time I fit a plain baseline first and report the change.
+- One fit cannot show whether `long_hours` helped, and it is only a cutoff on `hours-per-week`, which the model already sees. Next time I fit a plain baseline first and report the change.
 - Missing values went in as they were. `get_dummies` turned a missing `workclass`, `occupation` or `native-country` into all zeros, which the model cannot tell from the level `drop_first` removed. An explicit missing category would fix that.
 - The numeric columns went in unscaled, so `fnlwgt` sits in the hundreds of thousands next to True/False dummies. A scaler inside a pipeline would fix that and keep the test rows out of the fit.
 
@@ -46,7 +46,7 @@ Run the cells top to bottom. No data is bundled: the first run downloads the Adu
 
 ## Files
 
-- [`week4_data_exploration_ml.ipynb`](week4_data_exploration_ml.ipynb): the notebook. The original file was plain text rather than notebook JSON, so GitHub could not render it. I rebuilt it as a real notebook with the same text and code and saved the outputs from a clean run on October 14, 2026.
+- [`week4_data_exploration_ml.ipynb`](week4_data_exploration_ml.ipynb): the notebook, with saved outputs from a clean run on October 14, 2026.
 - [`images/age-distribution.png`](images/age-distribution.png): the 20-bin histogram of age.
 - [`images/hours-vs-age.png`](images/hours-vs-age.png): the scatter shown above.
 - `README.md`: this file.
