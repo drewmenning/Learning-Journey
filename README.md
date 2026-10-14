@@ -11,7 +11,7 @@ After a warm-up on coin flips and conditional probability, I built two small cla
 - Part A: 1,000 simulated runs of 10 fair coin flips (numpy, seed 0); exactly 5 heads came up 24.5% of the time. On the Titanic table, 74.2% of female passengers survived, and female passengers make up 68.1% of all survivors. The two numbers sound alike and answer different questions.
 - Prep: I dropped passengers missing sex, age, class or survived and label-encoded sex and class. The split is 80/20 with random_state=0, so both models face the same test passengers.
 - Part B: Gaussian Naive Bayes on those three features.
-- Part C: a decision tree with max_depth=4, which keeps the plot readable and stops the tree from chasing individual passengers.
+- Part C: a decision tree with max_depth=4, which keeps the plot readable and limits how finely it can split the passengers.
 - Part D: a written reflection on where these models can mislead and how to explain uncertainty to a non-technical reader.
 
 ## Results
@@ -42,7 +42,7 @@ Run all cells from the top. The saved outputs come from a clean run on October 1
 
 ## Files
 
-- [probability-bayes-decision-trees.ipynb](probability-bayes-decision-trees.ipynb): the notebook, Parts A to D, with saved outputs. Until October 2026 it was one unrun code cell named `m6 assignment.ipynb`. I split it into cells by part, corrected one printed note that called Naive Bayes the less accurate model (the reverse of the result), and ran it.
+- [probability-bayes-decision-trees.ipynb](probability-bayes-decision-trees.ipynb): the notebook, Parts A to D, with saved outputs.
 - `images/decision-tree.png`: the tree plot from Part C.
 - `README.md`: this file.
 
