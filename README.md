@@ -70,7 +70,7 @@ Either path retrains all three models (on CPU unless a CUDA GPU is available) an
 
 - [deep-learning-architectures-training.ipynb](deep-learning-architectures-training.ipynb): trains and scores all three models and writes everything in `results/`.
 - `deep_learning_architectures_training.py`: the same training code as a plain script.
-- [deep-learning-architectures.ipynb](deep-learning-architectures.ipynb): summary notebook that reads the saved metrics, replots them and holds the written reflection. In October 2026 I corrected its numbers and the first reflection paragraph, which came from an earlier run, to match the saved results.
+- [deep-learning-architectures.ipynb](deep-learning-architectures.ipynb): summary notebook that reads the saved metrics, replots them and holds the written reflection.
 - `data/`: `fashion_train.csv` and `fashion_test.csv` (1,000 rows each) and `tinyshakespeare.txt`.
 - `results/`: `metrics.json` (scores, per-epoch histories, confusion matrix, generated text), `generated_text.txt`, the training-curve PNGs for each model, plus the CNN confusion matrix and example grids of correct and incorrect CNN predictions.
 - `requirements.txt`: the Python packages used.
