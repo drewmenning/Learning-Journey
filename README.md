@@ -1,6 +1,6 @@
 # Learning journey
 
-This repo is an index, in the order I built them, of my spring 2026 coursework repos for the AAS in Artificial Intelligence in IT at DMACC (Des Moines Area Community College), where I graduate in May 2027. Each repo has its own README with results, and the month shown is the month of its last commit before this index was written in October 2026.
+This repo is an index, in the order I built them, of my spring 2026 coursework repos for the AAS in Artificial Intelligence in IT at DMACC (Des Moines Area Community College), where I graduate in May 2027, plus one project built outside class in October 2026. Each repo has its own README with results, and the month shown is the month of its last commit before this index was written in October 2026.
 
 | # | Repo | Module | What it covers | Month |
 |---|---|---|---|---|
@@ -13,5 +13,6 @@ This repo is an index, in the order I built them, of my spring 2026 coursework r
 | 7 | [deep-learning-architectures](https://github.com/drewmenning/deep-learning-architectures) | M11 | An MLP, a CNN and an LSTM in PyTorch | Apr 2026 |
 | 8 | [model-evaluation-overfitting-assignment](https://github.com/drewmenning/model-evaluation-overfitting-assignment) | M12 | Stratified splits and overfitting controls in Keras | Apr 2026 |
 | 9 | [ai4i-predictive-maintenance](https://github.com/drewmenning/ai4i-predictive-maintenance) | Capstone, AAI 201 Machine Learning | Machine failure prediction on AI4I 2020 with gradient boosting, threshold tuning and a fairness check | Apr 2026 |
+| 10 | [iowa-county-crop-ops](https://github.com/drewmenning/iowa-county-crop-ops) | Outside class | Iowa county corn and soybean estimates joined to climate-division weather in a SQLite star schema, with six SQL queries, a dashboard and a memo for a grain elevator manager | Oct 2026 |
 
-If you only look at one, start with the capstone, [ai4i-predictive-maintenance](https://github.com/drewmenning/ai4i-predictive-maintenance).
+If you only look at one, start with the capstone, [ai4i-predictive-maintenance](https://github.com/drewmenning/ai4i-predictive-maintenance). If you want to see SQL, open [iowa-county-crop-ops](https://github.com/drewmenning/iowa-county-crop-ops).
