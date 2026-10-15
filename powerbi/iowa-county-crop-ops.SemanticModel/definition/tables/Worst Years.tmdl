@@ -1,0 +1,79 @@
+/// Summary of the worst yield years by crop with counts of bad counties and weather.
+table 'Worst Years'
+	lineageTag: b9c0d087-ff72-4a1b-96e1-a817843c7ff6
+
+	/// Crop name, Corn or Soybeans.
+	column Crop
+		dataType: string
+		lineageTag: 4830982d-bd8c-405a-8966-6febaaa7c91e
+		summarizeBy: none
+		sourceColumn: Crop
+
+	/// Crop year.
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 27d7015a-dace-499f-be21-14474ca7d951
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// Number of counties flagged as bad in the year.
+	column 'Counties Bad'
+		dataType: int64
+		formatString: 0
+		lineageTag: b70c1ab8-5ad4-4384-9a91-d6e9f14cefd1
+		summarizeBy: none
+		sourceColumn: Counties Bad
+
+	/// Number of counties with published data in the year.
+	column 'Counties Published'
+		dataType: int64
+		formatString: 0
+		lineageTag: 699ffc49-85b2-4ec0-8ec0-ce37b4449476
+		summarizeBy: none
+		sourceColumn: Counties Published
+
+	/// Median yield versus trend in percent points across counties.
+	column 'Median Pct vs Trend'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 087fc19f-9107-4352-bbf6-8fa4f0f9b306
+		summarizeBy: none
+		sourceColumn: Median Pct vs Trend
+
+	/// July rainfall in inches.
+	column 'July Rain'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 470801ef-6fea-46aa-982f-236d1b0a4762
+		summarizeBy: none
+		sourceColumn: July Rain
+
+	/// Number of days with a high at or above 90 F.
+	column 'Days 90F'
+		dataType: double
+		formatString: 0.0
+		lineageTag: dacc4f05-82a7-4a34-adf6-2abc8677c69a
+		summarizeBy: none
+		sourceColumn: Days 90F
+
+	/// Share of published counties flagged as bad, in percent points.
+	column 'Share Bad Pct'
+		dataType: double
+		formatString: 0.0
+		lineageTag: c4175dad-f285-476f-8e87-eefe47c939ca
+		summarizeBy: none
+		sourceColumn: Share Bad Pct
+
+	partition 'Worst Years' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\outputs\summary_worst_years.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"commodity", type text}, {"year", Int64.Type}, {"counties_bad", Int64.Type}, {"counties_published", Int64.Type}, {"median_pct_vs_trend", type number}, {"july_precip_in", type number}, {"days_high_ge_90", type number}, {"share_bad_pct", type number}}),
+				    Proper = Table.TransformColumns(Typed, {{"commodity", Text.Proper, type text}}),
+				    Renamed = Table.RenameColumns(Proper, {{"commodity", "Crop"}, {"year", "Year"}, {"counties_bad", "Counties Bad"}, {"counties_published", "Counties Published"}, {"median_pct_vs_trend", "Median Pct vs Trend"}, {"july_precip_in", "July Rain"}, {"days_high_ge_90", "Days 90F"}, {"share_bad_pct", "Share Bad Pct"}})
+				in
+				    Renamed
+

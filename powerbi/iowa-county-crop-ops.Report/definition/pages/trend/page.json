@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/1.4.0/schema.json",
+  "name": "2932460c6394541c8279",
+  "displayName": "County yield vs trend",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

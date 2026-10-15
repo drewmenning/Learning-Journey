@@ -1,0 +1,83 @@
+/// Expected 2026 bushels by county and crop from latest planted acres, harvest ratio and trend yield.
+table 'Expected 2026'
+	lineageTag: 57363677-c046-45a2-b5ec-c35191576c30
+
+	/// Expected 2026 production in millions of bushels.
+	measure 'Expected 2026 (M bu)' = SUM('Expected 2026'[Expected Bushels 2026]) / 1000000
+		formatString: #,##0.0
+		lineageTag: 5eded65f-9254-435f-b25a-4f6444668982
+
+	/// Five digit county FIPS code.
+	column 'County FIPS'
+		dataType: int64
+		formatString: 0
+		lineageTag: cea2ef78-5dd0-4d70-bff0-1b57be91661d
+		summarizeBy: none
+		sourceColumn: County FIPS
+
+	/// County name in proper case.
+	column County
+		dataType: string
+		lineageTag: 23a67b05-4732-428b-8bdb-de7dcae7dd12
+		summarizeBy: none
+		sourceColumn: County
+
+	/// Crop name, Corn or Soybeans.
+	column Crop
+		dataType: string
+		lineageTag: 1cc9434e-25c1-4d34-8e8c-31553842d582
+		summarizeBy: none
+		sourceColumn: Crop
+
+	/// Latest planted acres, from the 2025 crop year.
+	column 'Planted Acres 2025'
+		dataType: double
+		formatString: #,##0
+		lineageTag: 998b6c50-992b-4f49-8302-26a60d5a3c90
+		summarizeBy: sum
+		sourceColumn: Planted Acres 2025
+
+	/// Ten year ratio of harvested acres to planted acres.
+	column 'Harvested to Planted 10yr'
+		dataType: double
+		formatString: 0.000
+		lineageTag: e7a8390c-cab5-4faa-835e-7939f4b900af
+		summarizeBy: none
+		sourceColumn: Harvested to Planted 10yr
+
+	/// Trend yield projected to 2026 in bushels per acre.
+	column 'Trend Yield 2026'
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: 4a88935d-bff4-4c56-b0c0-9684e8daff82
+		summarizeBy: none
+		sourceColumn: Trend Yield 2026
+
+	/// Expected 2026 production in bushels.
+	column 'Expected Bushels 2026'
+		dataType: double
+		formatString: #,##0
+		lineageTag: 9938405c-7b89-4f82-98a9-6990afed557b
+		summarizeBy: sum
+		sourceColumn: Expected Bushels 2026
+
+	partition 'Expected 2026' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\outputs\06_expected_bushels.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"county_name", type text}, {"commodity", type text}, {"acres_year", Int64.Type}, {"latest_planted_acres", type number}, {"harvested_to_planted_10yr", type number}, {"trend_yield_2026", type number}, {"expected_bu_2026", type number}}),
+				    Lookup = Csv.Document(File.Contents(DataFolder & "\lookups\county_to_district.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    LookupHeaders = Table.PromoteHeaders(Lookup, [PromoteAllScalars = true]),
+				    LookupTyped = Table.TransformColumnTypes(LookupHeaders, {{"county_fips", Int64.Type}, {"county_name", type text}}),
+				    LookupKeep = Table.SelectColumns(LookupTyped, {"county_fips", "county_name"}),
+				    Joined = Table.NestedJoin(Typed, {"county_name"}, LookupKeep, {"county_name"}, "Lookup", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Joined, "Lookup", {"county_fips"}, {"county_fips"}),
+				    Proper0 = Table.TransformColumns(Expanded, {{"county_name", Text.Proper, type text}, {"commodity", Text.Proper, type text}}),
+				    Proper = Table.ReplaceValue(Proper0, "O Brien", "O'Brien", Replacer.ReplaceText, {"county_name"}),
+				    Renamed = Table.RenameColumns(Proper, {{"county_fips", "County FIPS"}, {"county_name", "County"}, {"commodity", "Crop"}, {"latest_planted_acres", "Planted Acres 2025"}, {"harvested_to_planted_10yr", "Harvested to Planted 10yr"}, {"trend_yield_2026", "Trend Yield 2026"}, {"expected_bu_2026", "Expected Bushels 2026"}}),
+				    Removed = Table.RemoveColumns(Renamed, {"acres_year"})
+				in
+				    Removed
+

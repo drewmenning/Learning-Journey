@@ -1,0 +1,218 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "510329925ff157c68f71",
+  "position": {
+    "x": 808,
+    "y": 70,
+    "z": 2400,
+    "height": 304,
+    "width": 448,
+    "tabOrder": 2400
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Weather in Bad Years"
+                    }
+                  },
+                  "Property": "Year Type"
+                }
+              },
+              "queryRef": "Weather in Bad Years.Year Type",
+              "nativeQueryRef": "Year Type",
+              "displayName": "Year type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Weather in Bad Years"
+                    }
+                  },
+                  "Property": "County Years"
+                }
+              },
+              "queryRef": "Weather in Bad Years.County Years",
+              "nativeQueryRef": "County Years",
+              "displayName": "County-years"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Weather in Bad Years"
+                    }
+                  },
+                  "Property": "July Rain"
+                }
+              },
+              "queryRef": "Weather in Bad Years.July Rain",
+              "nativeQueryRef": "July Rain",
+              "displayName": "July rain, in"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Weather in Bad Years"
+                    }
+                  },
+                  "Property": "Days 90F"
+                }
+              },
+              "queryRef": "Weather in Bad Years.Days 90F",
+              "nativeQueryRef": "Days 90F",
+              "displayName": "Days 90F+"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Weather in Bad Years"
+                    }
+                  },
+                  "Property": "Pct vs Trend"
+                }
+              },
+              "queryRef": "Weather in Bad Years.Pct vs Trend",
+              "nativeQueryRef": "Pct vs Trend",
+              "displayName": "Avg % vs trend"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Weather in Bad Years"
+                  }
+                },
+                "Property": "Year Type"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Weather in bad against normal county-years (query 05)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1b2219'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Iowa crops",
+  "dataColors": [
+    "#b8711d",
+    "#2f6b3a",
+    "#5d6658",
+    "#e3a24b",
+    "#8fcf96",
+    "#993404",
+    "#006d2c",
+    "#9ea89a"
+  ],
+  "background": "#ffffff",
+  "foreground": "#1b2219",
+  "tableAccent": "#2f6b3a",
+  "minimum": "#fff7bc",
+  "center": "#fe9929",
+  "maximum": "#993404",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#1b2219"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 9,
+      "color": "#5d6658"
+    }
+  }
+}

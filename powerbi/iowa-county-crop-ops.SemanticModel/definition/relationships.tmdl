@@ -1,0 +1,32 @@
+relationship 3f1c9a62-7b4e-4d2a-9c58-1e0f6a2b7c01
+	fromColumn: 'Crop Year'.Crop
+	toColumn: 'Crop Type'.Crop
+
+relationship 8a2d4e71-c3b9-4f06-a1d7-5b6e9c0f2d02
+	fromColumn: 'Crop Year'.'County FIPS'
+	toColumn: County.'County FIPS'
+
+relationship b7e5f083-2a1c-4e9d-8f36-7c4d1a9e5b03
+	fromColumn: 'Crop Year'.'District Year'
+	toColumn: Weather.'District Year'
+
+relationship c4a8d196-5e3f-4b7a-9d21-8f0e6c3b1a04
+	fromColumn: 'State Year'.Crop
+	toColumn: 'Crop Type'.Crop
+
+relationship d9b3e2a7-1f6c-4a85-b4e0-2c7d9f5a8e05
+	fromColumn: 'Expected 2026'.'County FIPS'
+	toColumn: County.'County FIPS'
+
+relationship e1c7f4b8-9a2d-4c63-8e5f-3b0a7d2c6f06
+	fromColumn: 'Expected 2026'.Crop
+	toColumn: 'Crop Type'.Crop
+
+relationship f6d2a9c3-4b8e-4f17-a2c9-6e1b5d8f3a07
+	fromColumn: 'Weather in Bad Years'.Crop
+	toColumn: 'Crop Type'.Crop
+
+relationship a2e8b5d4-6c1f-4d39-b7a8-9f4c2e6d1b08
+	fromColumn: 'Worst Years'.Crop
+	toColumn: 'Crop Type'.Crop
+

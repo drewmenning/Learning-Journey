@@ -14,7 +14,7 @@ I joined USDA NASS county estimates for corn and soybeans (all 99 Iowa counties,
 - **Built a star schema in SQLite** (`sql/schema.sql`): `dim_county`, `dim_crop`, `fact_crop_county_year`, `fact_crop_state_year` and `fact_weather_district_season`, plus a view, `v_yield_trend`, that fits a straight-line yield trend per county and crop with sums inside SQL. `src/load_sqlite.py` loads it.
 - **Wrote six analytic queries**, one per manager question, in `sql/analysis/`: production per published year with a window `SUM` and `RANK`; crop mix shift with `LAG`; a five-row rolling yield with a `ROWS BETWEEN` frame; every county-year scored against its trend; weather in bad versus normal years; and expected 2026 bushels for the elevator's draw area. `src/run_queries.py` exports each result to `data/outputs/`, and `src/summary.py` builds the tables quoted below from those exports.
 - **Checked the work.** `src/validate.py` compares the county sums to the state figure and checks that harvested acres never exceed planted and that production equals harvested acres times yield. It also refits three counties' trends with NumPy to confirm the SQL math. Ten pytest checks cover the cleaning rules and the query outputs.
-- **Made it readable.** A four-page Plotly dashboard (`dashboard/iowa_crops_dashboard.html`), four figures, a data dictionary and a one-page memo written for an elevator manager in the Polk County draw area.
+- **Made it readable.** A four-page Plotly dashboard (`dashboard/iowa_crops_dashboard.html`), a four-page Power BI report, four figures, a data dictionary and a one-page memo written for an elevator manager in the Polk County draw area.
 
 ## Results
 
@@ -45,6 +45,25 @@ The draw area is Polk County plus the six counties that share a boundary with it
 
 *One dot per county and year. Most of the bad years sit on the dry side, but not all of them: 2010 was a wet year with 7.8 inches of July rain on average, and the 2003 soybean collapse came with a normal July.*
 
+## Power BI report
+
+I also built a four-page Power BI report on the same SQLite outputs. It is saved two ways: as a Power BI Project (PBIP, with the report in PBIR JSON files and the semantic model in TMDL) and as a single `powerbi/iowa-county-crop-ops.pbix` that opens with the data already loaded (import mode, about 330 KB).
+
+![Where the grain is: Power BI page one](docs/figures/powerbi-grain.png)
+
+*Page one in the corn view. The map shades each county by production per published year; the cards pull out the Polk draw area.*
+
+| Page | What it answers | Main visuals |
+|---|---|---|
+| Where the grain is | Which counties grow the most, and how much of it sits in the Polk draw area | Four cards, shape map of all 99 counties, ranked county table, crop slicer |
+| County yield vs trend | How one county's yield tracks its trend line, and which years fell short | County dropdown, cards, actual vs trend line chart, year table |
+| Bad years and weather | What July rain and heat looked like when counties fell 10% or more below trend | Column chart by year, bad-year weather table, July rain scatter, worst-years table |
+| Elevator view | What the seven draw-area counties grew, and what 2026 might bring | Cards, corn share line, expected 2026 column chart, county table |
+
+One modeling choice mattered more than the rest. Production is measured per published year, not as a five-year sum, because NASS stopped publishing some counties. Jasper has no county row after 2023, and only 73 corn counties were published in 2024. The DAX measure divides each county's production by the number of years it was published, then sums the counties. State share uses the published counties as the denominator, and the card label says so.
+
+To open it, double-click the `.pbix` in Power BI Desktop. To work from the project instead, open `powerbi/iowa-county-crop-ops.pbip`, set the `DataFolder` parameter (Transform data > Edit parameters) to the `data` folder of your clone, then refresh. Table and measure details are in [docs/powerbi.md](docs/powerbi.md).
+
 ## What I learned
 
 - **Published does not mean complete.** In 2000 the county rows add up to 100% of NASS's state production. By 2024 they cover 75% for corn and 69% for soybeans because NASS now combines small counties. Any "share of state" has to say which denominator it uses, and a five-year sum quietly punishes a county that is missing a year, so the production query averages per published year and reports how many years each county has.
@@ -71,8 +90,9 @@ Data as pulled on October 15, 2026: the NASS file `qs.crops_20261015.txt.gz`, IE
 - `src/`: `nass_pull.py`, `iem_pull.py`, `lookups_pull.py`, `clean.py`, `draw_area.py`, `load_sqlite.py`, `run_queries.py`, `validate.py`, `summary.py`, `figures.py`, `build_dashboard.py`.
 - `sql/schema.sql` (tables and the trend view) and `sql/analysis/01` to `06`, the six questions.
 - `data/raw/`: the filtered NASS extract (15 MB) and the IEM daily file (7 MB). `data/processed/`: the clean tables. `data/outputs/`: one CSV per query, the coverage table and the summary tables. `data/lookups/`: county-to-division map, draw area, Iowa county outlines.
-- `docs/data_dictionary.md`, `docs/validation.md`, `docs/memo_elevator_manager.md`, `docs/figures/`.
+- `docs/data_dictionary.md`, `docs/validation.md`, `docs/memo_elevator_manager.md`, `docs/powerbi.md`, `docs/figures/`.
 - `dashboard/iowa_crops_dashboard.html`: where the grain is, county yield versus trend, bad years and weather, and the elevator view.
+- `powerbi/`: the Power BI report as a PBIP project (PBIR report, TMDL model) and a `.pbix` with the data already loaded.
 - `tests/`: ten pytest checks.
 
 ## Sources

@@ -1,0 +1,217 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "9f5bd269597a528c8802",
+  "position": {
+    "x": 656,
+    "y": 412,
+    "z": 3200,
+    "height": 284,
+    "width": 600,
+    "tabOrder": 3200
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "County"
+                    }
+                  },
+                  "Property": "County"
+                }
+              },
+              "queryRef": "County.County",
+              "nativeQueryRef": "County"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Crop Year"
+                    }
+                  },
+                  "Property": "Recent Production per Year (M bu)"
+                }
+              },
+              "queryRef": "Crop Year.Recent Production per Year (M bu)",
+              "nativeQueryRef": "Recent Production per Year (M bu)",
+              "displayName": "M bu per year"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Crop Year"
+                    }
+                  },
+                  "Property": "Bad County Years"
+                }
+              },
+              "queryRef": "Crop Year.Bad County Years",
+              "nativeQueryRef": "Bad County Years",
+              "displayName": "Bad years"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Crop Year"
+                    }
+                  },
+                  "Property": "Published Years"
+                }
+              },
+              "queryRef": "Crop Year.Published Years",
+              "nativeQueryRef": "Published Years",
+              "displayName": "Years published"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Crop Year"
+                    }
+                  },
+                  "Property": "Trend Slope (bu/acre/yr)"
+                }
+              },
+              "queryRef": "Crop Year.Trend Slope (bu/acre/yr)",
+              "nativeQueryRef": "Trend Slope (bu/acre/yr)",
+              "displayName": "Trend, bu/acre/yr"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Crop Year"
+                  }
+                },
+                "Property": "Recent Production per Year (M bu)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Draw area counties, 2000 to 2025'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1b2219'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
