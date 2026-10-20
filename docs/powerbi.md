@@ -13,7 +13,7 @@
 
 ## Source data
 
-Every table loads from CSVs the pipeline already writes. One text parameter, `DataFolder` (default `C:\Users\drewm\dev\iowa-county-crop-ops\data`), sets the root, so there is no database connection to configure.
+Every table loads from CSVs the pipeline already writes. One text parameter, `DataFolder` (default `C:\iowa-county-crop-ops\data`), sets the root, so there is no database connection to configure.
 
 | Table | Source |
 |---|---|
