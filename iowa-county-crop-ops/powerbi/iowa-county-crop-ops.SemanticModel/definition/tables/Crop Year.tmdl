@@ -1,0 +1,290 @@
+/// Fact table, one row per county, crop and year, with trend, rolling and weather keys.
+table 'Crop Year'
+	lineageTag: de8a6945-38f6-4d51-8c63-7c7bf64b0bf4
+
+	/// Total production in bushels for the rows in context.
+	measure 'Production (bu)' = SUM('Crop Year'[Production])
+		formatString: #,##0
+		lineageTag: 6b0ed141-7707-42f7-ae9c-deeebc1c1a6f
+
+	/// Count of distinct years with published data in context.
+	measure 'Published Years' = DISTINCTCOUNT('Crop Year'[Year])
+		formatString: 0
+		lineageTag: e80cc76d-8f30-4b32-a5d2-82968bf5cdcc
+
+	/// Sum over counties and crops of each one's production divided by its own published years, in millions of bushels (matches query 01).
+	measure 'Production per Published Year (M bu)' =
+			SUMX(
+			    SUMMARIZE('Crop Year', 'Crop Year'[County FIPS], 'Crop Year'[Crop]),
+			    CALCULATE(DIVIDE(SUM('Crop Year'[Production]), DISTINCTCOUNT('Crop Year'[Year])))
+			) / 1000000
+		formatString: #,##0.0
+		lineageTag: e0807786-76c1-46db-ab66-45d98e028299
+
+	/// Production per published year for 2021 through 2025, in millions of bushels.
+	measure 'Recent Production per Year (M bu)' = CALCULATE([Production per Published Year (M bu)], 'Crop Year'[Year] >= 2021, 'Crop Year'[Year] <= 2025)
+		formatString: #,##0.0
+		lineageTag: fb735d06-616c-4179-9ad7-9e978b8fa03e
+
+	/// Recent production of the counties in context as a share of all published counties.
+	measure 'Share of Published Counties' = DIVIDE([Recent Production per Year (M bu)], CALCULATE([Recent Production per Year (M bu)], REMOVEFILTERS(County)))
+		formatString: 0.0%
+		lineageTag: 5b6f268b-6ae7-486e-aad5-c4c150fe15c7
+
+	/// Production divided by harvested acres, bushels per acre.
+	measure 'Yield (bu/acre)' = DIVIDE(SUM('Crop Year'[Production]), SUM('Crop Year'[Harvested Acres]))
+		formatString: #,##0.0
+		lineageTag: 5fb2db75-7b31-4b27-9169-013232d6ba5b
+
+	/// Average fitted trend yield in bushels per acre.
+	measure 'Trend Yield (bu/acre)' = AVERAGE('Crop Year'[Trend Yield])
+		formatString: #,##0.0
+		lineageTag: 100a4e16-67dc-453b-a5d6-c853d2b08de8
+
+	/// Average percent deviation of actual yield from trend, in percent points.
+	measure 'Avg Pct vs Trend' = AVERAGE('Crop Year'[Pct vs Trend])
+		formatString: 0.0
+		lineageTag: 25dae0fa-8c84-4bab-b58f-1a899a41dc7e
+
+	/// Median percent deviation of actual yield from trend, in percent points.
+	measure 'Median Pct vs Trend' = MEDIAN('Crop Year'[Pct vs Trend])
+		formatString: 0.0
+		lineageTag: f43e260e-fc18-4e63-b01c-272194975674
+
+	/// Average trend slope in bushels per acre per year.
+	measure 'Trend Slope (bu/acre/yr)' = AVERAGE('Crop Year'[Trend Slope])
+		formatString: 0.00
+		lineageTag: ea2cc074-cb58-4d7c-aeae-b9cda5e38e9f
+
+	/// Number of county year rows in context.
+	measure 'County Years' = COUNTROWS('Crop Year')
+		formatString: #,##0
+		lineageTag: e30c20d9-6af2-4455-89e2-58f0a337ab1c
+
+	/// Number of county year rows flagged as bad years.
+	measure 'Bad County Years' = SUM('Crop Year'[Bad Year])
+		formatString: #,##0
+		lineageTag: 078e3134-08a4-4345-a096-d3a2ad6bf1a7
+
+	/// Bad county years as a share of all county years.
+	measure 'Share Bad' = DIVIDE([Bad County Years], [County Years])
+		formatString: 0.0%
+		lineageTag: 885c627d-8cc7-4ba1-b659-307beecde65e
+
+	/// Count of distinct counties with published data in context.
+	measure 'Counties Published' = DISTINCTCOUNT('Crop Year'[County FIPS])
+		formatString: 0
+		lineageTag: 1a6d6fa2-0a8c-4ee6-b875-d24735455539
+
+	/// Average July rainfall in inches across county years, from the related weather row.
+	measure 'July Rain (in)' = AVERAGEX('Crop Year', RELATED(Weather[July Rain]))
+		formatString: 0.00
+		lineageTag: 168e90d1-9dfd-42d9-a76c-068421967550
+
+	/// Average April to September rainfall in inches across county years.
+	measure 'Season Rain (in)' = AVERAGEX('Crop Year', RELATED(Weather[Season Rain]))
+		formatString: 0.0
+		lineageTag: cea28dec-0ae7-4f3c-9897-5ca76e0b628f
+
+	/// Average count of days with highs at or above 90 F across county years.
+	measure 'Days 90F' = AVERAGEX('Crop Year', RELATED(Weather[Days 90F]))
+		formatString: 0.0
+		lineageTag: c8aa38c4-a4ca-410e-a4b6-fd2e288428c0
+
+	/// Total planted acres for the rows in context.
+	measure 'Planted Acres (total)' = SUM('Crop Year'[Planted Acres])
+		formatString: #,##0
+		lineageTag: 7c566e38-0e86-49f8-b068-675492226067
+
+	/// Corn planted acres as a share of all planted acres, ignoring crop filters.
+	measure 'Corn Share of Planted' =
+			VAR BothCrops =
+			    FILTER(
+			        SUMMARIZE(
+			            CALCULATETABLE('Crop Year', REMOVEFILTERS('Crop Type'), REMOVEFILTERS('Crop Year'[Crop])),
+			            'Crop Year'[County FIPS], 'Crop Year'[Year]
+			        ),
+			        CALCULATE(DISTINCTCOUNT('Crop Year'[Crop]), REMOVEFILTERS('Crop Type'), REMOVEFILTERS('Crop Year'[Crop])) = 2
+			    )
+			VAR CornAcres =
+			    CALCULATE(SUM('Crop Year'[Planted Acres]), BothCrops, 'Crop Year'[Crop] = "Corn", REMOVEFILTERS('Crop Type'))
+			VAR AllAcres =
+			    CALCULATE(SUM('Crop Year'[Planted Acres]), BothCrops, REMOVEFILTERS('Crop Type'), REMOVEFILTERS('Crop Year'[Crop]))
+			RETURN
+			    DIVIDE(CornAcres, AllAcres)
+		formatString: 0.0%
+		lineageTag: 56c1ed77-86d6-4e43-b2d1-c9b5ceaeda1e
+
+	/// Recent production per year for draw area counties only, in millions of bushels.
+	measure 'Draw Area Production per Year (M bu)' = CALCULATE([Recent Production per Year (M bu)], County[Draw Area] = "Draw area")
+		formatString: #,##0.0
+		lineageTag: b2735d94-32e2-4bc3-88dc-404557d1d0ec
+
+	/// Draw area recent production as a share of all published counties (what NASS published for Iowa).
+	measure 'Draw Area Share of State' = DIVIDE([Draw Area Production per Year (M bu)], CALCULATE([Recent Production per Year (M bu)], REMOVEFILTERS(County)))
+		formatString: 0.0%
+		lineageTag: 583dd063-bc7c-4e04-a123-a91aa0cecb81
+
+	/// Most recent year in context.
+	measure 'Latest Year' = MAX('Crop Year'[Year])
+		formatString: 0
+		lineageTag: eeda04c6-fa92-4194-a7fe-9c615befb7fd
+
+	/// Five digit county FIPS code.
+	column 'County FIPS'
+		dataType: int64
+		formatString: 0
+		lineageTag: 31a26dc2-d0b3-483d-a709-56d28b4a4029
+		summarizeBy: none
+		sourceColumn: County FIPS
+
+	/// County name in proper case.
+	column 'County Name'
+		dataType: string
+		lineageTag: 2a4f665c-3aa7-48e7-b6c9-2bb9ca3bb945
+		summarizeBy: none
+		sourceColumn: County Name
+
+	/// Crop name, Corn or Soybeans.
+	column Crop
+		dataType: string
+		lineageTag: 4f580d5d-4cb9-479d-ab5b-5ca48641a3e1
+		summarizeBy: none
+		sourceColumn: Crop
+
+	/// Crop year.
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: fb3c618c-1e74-437b-a6ff-d3aa1f43b0af
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// Acres planted.
+	column 'Planted Acres'
+		dataType: double
+		formatString: #,##0
+		lineageTag: 912af189-9628-4b6b-a7a9-367315ed8de9
+		summarizeBy: sum
+		sourceColumn: Planted Acres
+
+	/// Acres harvested.
+	column 'Harvested Acres'
+		dataType: double
+		formatString: #,##0
+		lineageTag: 3075d688-6b55-4a75-95d5-3854f8f48cbe
+		summarizeBy: sum
+		sourceColumn: Harvested Acres
+
+	/// Yield in bushels per acre.
+	column Yield
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: e5add5a2-c9d4-40c5-8548-a33c1946b104
+		summarizeBy: none
+		sourceColumn: Yield
+
+	/// Production in bushels.
+	column Production
+		dataType: double
+		formatString: #,##0
+		lineageTag: 6ff185f9-5614-4643-95ef-2dee1af1d2b7
+		summarizeBy: sum
+		sourceColumn: Production
+
+	/// Fitted trend yield in bushels per acre.
+	column 'Trend Yield'
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: ef9c4f5a-f08c-41ea-a925-19a7ee32ff5d
+		summarizeBy: none
+		sourceColumn: Trend Yield
+
+	/// Actual yield versus trend in percent points, for example -25.0.
+	column 'Pct vs Trend'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 871712c1-59eb-417a-9a69-afb84ee08919
+		summarizeBy: none
+		sourceColumn: Pct vs Trend
+
+	/// 1 when the year is flagged as a bad year for the county and crop, otherwise 0.
+	column 'Bad Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: c228b944-a746-4f2e-8451-3ccb3bf39bbe
+		summarizeBy: sum
+		sourceColumn: Bad Year
+
+	/// Trend slope in bushels per acre per year.
+	column 'Trend Slope'
+		dataType: double
+		formatString: 0.00
+		lineageTag: f09f7e5a-90ea-4503-9ec7-6325de28be13
+		summarizeBy: none
+		sourceColumn: Trend Slope
+
+	/// Five year rolling average yield in bushels per acre.
+	column 'Yield 5yr Avg'
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: e1ef001b-a0d1-45fe-95d2-f8e0bd850182
+		summarizeBy: none
+		sourceColumn: Yield 5yr Avg
+
+	/// Year over year change in yield, null for the first year of each county.
+	column 'YoY Change'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 10b7f6d5-aa52-4f99-a83d-b046694821f6
+		summarizeBy: none
+		sourceColumn: YoY Change
+
+	/// Climate division and year key, for example IAC007-2012.
+	column 'District Year'
+		dataType: string
+		lineageTag: 9003d6be-b638-4dfc-a989-efc38991927f
+		summarizeBy: none
+		sourceColumn: District Year
+
+	/// County name and year label, for example Adair 2012.
+	column 'County Year'
+		dataType: string
+		lineageTag: b1bb2b1d-5066-4809-9872-c2c328d123c0
+		summarizeBy: none
+		sourceColumn: County Year
+
+	partition 'Crop Year' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\processed\crop_county_year.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"county_fips", Int64.Type}, {"county_name", type text}, {"asd_code", Int64.Type}, {"crop", type text}, {"year", Int64.Type}, {"acres_planted", type number}, {"acres_harvested", type number}, {"yield_bu_acre", type number}, {"production_bu", type number}, {"source", type text}}),
+				    Trend = Csv.Document(File.Contents(DataFolder & "\outputs\04_trend_residual_bad_years.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    TrendHeaders = Table.PromoteHeaders(Trend, [PromoteAllScalars = true]),
+				    TrendTyped = Table.TransformColumnTypes(TrendHeaders, {{"county_name", type text}, {"draw_area", type text}, {"commodity", type text}, {"year", Int64.Type}, {"actual_yield", type number}, {"trend_yield", type number}, {"pct_vs_trend", type number}, {"bad_year", Int64.Type}, {"trend_slope_bu_per_year", type number}, {"years_fit", Int64.Type}}),
+				    TrendKeep = Table.SelectColumns(TrendTyped, {"county_name", "commodity", "year", "trend_yield", "pct_vs_trend", "bad_year", "trend_slope_bu_per_year"}),
+				    JoinTrend = Table.NestedJoin(Typed, {"county_name", "crop", "year"}, TrendKeep, {"county_name", "commodity", "year"}, "Trend", JoinKind.LeftOuter),
+				    ExpandTrend = Table.ExpandTableColumn(JoinTrend, "Trend", {"trend_yield", "pct_vs_trend", "bad_year", "trend_slope_bu_per_year"}, {"trend_yield", "pct_vs_trend", "bad_year", "trend_slope_bu_per_year"}),
+				    Rolling = Csv.Document(File.Contents(DataFolder & "\outputs\03_rolling_yield_yoy.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    RollingHeaders = Table.PromoteHeaders(Rolling, [PromoteAllScalars = true]),
+				    RollingTyped = Table.TransformColumnTypes(RollingHeaders, {{"county_name", type text}, {"draw_area", type text}, {"commodity", type text}, {"year", Int64.Type}, {"yield_bu_acre", type number}, {"yoy_change", type number}, {"yield_5yr_avg", type number}, {"rows_in_avg", Int64.Type}, {"years_spanned", Int64.Type}}),
+				    RollingKeep = Table.SelectColumns(RollingTyped, {"county_name", "commodity", "year", "yoy_change", "yield_5yr_avg"}),
+				    JoinRolling = Table.NestedJoin(ExpandTrend, {"county_name", "crop", "year"}, RollingKeep, {"county_name", "commodity", "year"}, "Rolling", JoinKind.LeftOuter),
+				    ExpandRolling = Table.ExpandTableColumn(JoinRolling, "Rolling", {"yoy_change", "yield_5yr_avg"}, {"yoy_change", "yield_5yr_avg"}),
+				    District = Csv.Document(File.Contents(DataFolder & "\lookups\county_to_district.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    DistrictHeaders = Table.PromoteHeaders(District, [PromoteAllScalars = true]),
+				    DistrictTyped = Table.TransformColumnTypes(DistrictHeaders, {{"county_fips", Int64.Type}, {"climate_district", type text}}),
+				    DistrictKeep = Table.SelectColumns(DistrictTyped, {"county_fips", "climate_district"}),
+				    JoinDistrict = Table.NestedJoin(ExpandRolling, {"county_fips"}, DistrictKeep, {"county_fips"}, "District", JoinKind.LeftOuter),
+				    ExpandDistrict = Table.ExpandTableColumn(JoinDistrict, "District", {"climate_district"}, {"climate_district"}),
+				    #"District Year" = Table.AddColumn(ExpandDistrict, "District Year", each [climate_district] & "-" & Text.From([year]), type text),
+				    Proper0 = Table.TransformColumns(#"District Year", {{"county_name", Text.Proper, type text}, {"crop", Text.Proper, type text}}),
+				    Proper = Table.ReplaceValue(Proper0, "O Brien", "O'Brien", Replacer.ReplaceText, {"county_name"}),
+				    #"County Year" = Table.AddColumn(Proper, "County Year", each [county_name] & " " & Text.From([year]), type text),
+				    Renamed = Table.RenameColumns(#"County Year", {{"county_fips", "County FIPS"}, {"county_name", "County Name"}, {"crop", "Crop"}, {"year", "Year"}, {"acres_planted", "Planted Acres"}, {"acres_harvested", "Harvested Acres"}, {"yield_bu_acre", "Yield"}, {"production_bu", "Production"}, {"trend_yield", "Trend Yield"}, {"pct_vs_trend", "Pct vs Trend"}, {"bad_year", "Bad Year"}, {"trend_slope_bu_per_year", "Trend Slope"}, {"yield_5yr_avg", "Yield 5yr Avg"}, {"yoy_change", "YoY Change"}}),
+				    Removed = Table.RemoveColumns(Renamed, {"asd_code", "source", "climate_district"})
+				in
+				    Removed
+

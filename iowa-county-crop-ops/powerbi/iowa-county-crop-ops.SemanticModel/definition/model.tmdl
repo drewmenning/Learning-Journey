@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation PBI_QueryOrder = ["Crop Type","County","Crop Year","Weather","State Year","Expected 2026","Weather in Bad Years","Worst Years","DataFolder"]
+
+ref table 'Crop Type'
+ref table County
+ref table 'Crop Year'
+ref table Weather
+ref table 'State Year'
+ref table 'Expected 2026'
+ref table 'Weather in Bad Years'
+ref table 'Worst Years'
+
+ref cultureInfo en-US
+

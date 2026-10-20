@@ -1,0 +1,89 @@
+/// One row per Iowa county with its ag district, climate division and draw area flag.
+table County
+	lineageTag: 0fc0c3c1-85d2-4808-878a-c7ed2dde3787
+
+	/// Five digit county FIPS code.
+	column 'County FIPS'
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: ad074095-4c05-4d36-b527-1f89f70241a0
+		summarizeBy: none
+		sourceColumn: County FIPS
+
+	/// County name in proper case.
+	column County
+		dataType: string
+		lineageTag: 5cd58e92-7f80-4232-8159-41d32242bc2e
+		dataCategory: County
+		summarizeBy: none
+		sourceColumn: County
+
+	/// County name formatted for map visuals, for example Polk County, Iowa.
+	column 'Map Location'
+		dataType: string
+		lineageTag: 85e59d78-2aeb-4d2a-852c-eb40a370dcf6
+		dataCategory: County
+		summarizeBy: none
+		sourceColumn: Map Location
+
+	/// USDA agricultural statistics district code.
+	column 'Ag District'
+		dataType: int64
+		formatString: 0
+		lineageTag: a843f79f-0116-4aa5-92c7-4f630c7d62c8
+		summarizeBy: none
+		sourceColumn: Ag District
+
+	/// NOAA climate division, IAC001 to IAC009.
+	column 'Climate Division'
+		dataType: string
+		lineageTag: a9ca63ba-a1ea-43fe-88e0-76bb2f71d525
+		summarizeBy: none
+		sourceColumn: Climate Division
+
+	/// Draw area when the county is in the draw area list, otherwise Other counties.
+	column 'Draw Area'
+		dataType: string
+		lineageTag: 1e596f8c-2c7f-4569-9976-1a89582b0d65
+		summarizeBy: none
+		sourceColumn: Draw Area
+
+	/// Role of the county in the draw area, center or neighbor, null for other counties.
+	column 'Draw Area Role'
+		dataType: string
+		lineageTag: 1f62eb7f-09e4-407a-af68-4137e7e0f2c2
+		summarizeBy: none
+		sourceColumn: Draw Area Role
+
+	/// Always Iowa; gives map visuals the state context for geocoding county names.
+	column State
+		dataType: string
+		lineageTag: f9b0d2bf-51b9-4aa8-8c41-ec22ee798fd3
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: State
+
+	partition County = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\lookups\county_to_district.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"county_fips", Int64.Type}, {"county_name", type text}, {"asd_code", Int64.Type}, {"climdiv_code", type text}, {"climate_district", type text}, {"asd_district", type text}, {"climdiv_district", type text}, {"same_boundary", type text}}),
+				    Draw = Csv.Document(File.Contents(DataFolder & "\lookups\draw_area.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    DrawHeaders = Table.PromoteHeaders(Draw, [PromoteAllScalars = true]),
+				    DrawTyped = Table.TransformColumnTypes(DrawHeaders, {{"county_fips", Int64.Type}, {"county_name", type text}, {"shared_boundary_points", Int64.Type}, {"role", type text}}),
+				    DrawKeep = Table.SelectColumns(DrawTyped, {"county_fips", "role"}),
+				    Joined = Table.NestedJoin(Typed, {"county_fips"}, DrawKeep, {"county_fips"}, "Draw", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Joined, "Draw", {"role"}, {"role"}),
+				    Proper0 = Table.TransformColumns(Expanded, {{"county_name", Text.Proper, type text}}),
+				    Proper = Table.ReplaceValue(Proper0, "O Brien", "O'Brien", Replacer.ReplaceText, {"county_name"}),
+				    Renamed = Table.RenameColumns(Proper, {{"county_fips", "County FIPS"}, {"county_name", "County"}, {"asd_code", "Ag District"}, {"climate_district", "Climate Division"}, {"role", "Draw Area Role"}}),
+				    #"Map Location" = Table.AddColumn(Renamed, "Map Location", each [County] & " County, Iowa", type text),
+				    #"Draw Area" = Table.AddColumn(#"Map Location", "Draw Area", each if [Draw Area Role] = null then "Other counties" else "Draw area", type text),
+				    State = Table.AddColumn(#"Draw Area", "State", each "Iowa", type text),
+				    Removed = Table.RemoveColumns(State, {"climdiv_code", "asd_district", "climdiv_district", "same_boundary"})
+				in
+				    Removed
+

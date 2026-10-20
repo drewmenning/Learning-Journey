@@ -1,0 +1,69 @@
+/// Iowa statewide crop totals, one row per crop and year.
+table 'State Year'
+	lineageTag: f9d8cbad-3be3-4ac8-96f7-c0773d26849a
+
+	/// Statewide production per year for 2021 through 2025, in millions of bushels.
+	measure 'State Production per Year (M bu)' = CALCULATE(DIVIDE(SUM('State Year'[Production]), DISTINCTCOUNT('State Year'[Year])), 'State Year'[Year] >= 2021, 'State Year'[Year] <= 2025) / 1000000
+		formatString: #,##0.0
+		lineageTag: 67221383-147e-402b-8e3b-0f1d36f5ab60
+
+	/// Crop name, Corn or Soybeans.
+	column Crop
+		dataType: string
+		lineageTag: b05a214d-5166-48cd-9cb4-4e2cda06e476
+		summarizeBy: none
+		sourceColumn: Crop
+
+	/// Crop year.
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: e0573391-85bd-409f-8f6e-91eafbafd909
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// Statewide acres planted.
+	column 'Planted Acres'
+		dataType: double
+		formatString: #,##0
+		lineageTag: d786eec3-9afd-4b41-8e2e-29b39b3aa5ef
+		summarizeBy: sum
+		sourceColumn: Planted Acres
+
+	/// Statewide acres harvested.
+	column 'Harvested Acres'
+		dataType: double
+		formatString: #,##0
+		lineageTag: fae6783b-3d3b-44e5-a896-6094d2c1a203
+		summarizeBy: sum
+		sourceColumn: Harvested Acres
+
+	/// Statewide yield in bushels per acre.
+	column Yield
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: a05d42d1-c4a3-42aa-b993-acf9a7f3a1fe
+		summarizeBy: none
+		sourceColumn: Yield
+
+	/// Statewide production in bushels.
+	column Production
+		dataType: double
+		formatString: #,##0
+		lineageTag: 7b61e913-f4ba-4216-a71c-2a5e76b179b3
+		summarizeBy: sum
+		sourceColumn: Production
+
+	partition 'State Year' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\processed\crop_state_year.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"crop", type text}, {"year", Int64.Type}, {"acres_planted", type number}, {"acres_harvested", type number}, {"yield_bu_acre", type number}, {"production_bu", type number}, {"last_loaded", type text}}),
+				    Proper = Table.TransformColumns(Typed, {{"crop", Text.Proper, type text}}),
+				    Renamed = Table.RenameColumns(Proper, {{"crop", "Crop"}, {"year", "Year"}, {"acres_planted", "Planted Acres"}, {"acres_harvested", "Harvested Acres"}, {"yield_bu_acre", "Yield"}, {"production_bu", "Production"}}),
+				    Removed = Table.RemoveColumns(Renamed, {"last_loaded"})
+				in
+				    Removed
+

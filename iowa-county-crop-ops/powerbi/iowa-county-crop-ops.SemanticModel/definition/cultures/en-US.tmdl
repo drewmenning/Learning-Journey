@@ -1,0 +1,654 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "crop_year.recent_production_per_year_m_bu": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Recent Production per Year (M bu)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Iowa, published counties (M bu per year)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "M bu per year": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Draw area, M bu per year, 2021 to 2025": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.counties_published": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Counties Published"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Counties published": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.draw_area_production_per_year_m_bu": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Draw Area Production per Year (M bu)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Polk draw area (M bu per year)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.draw_area_share_of_state": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Draw Area Share of State"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Draw area share of published counties": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Share of published Iowa counties": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.share_of_published_counties": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Share of Published Counties"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Share of published": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.published_years": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Published Years"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Years published": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.yield_bu_acre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Yield (bu/acre)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Yield, bu per acre (all years)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Yield": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Actual yield": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.trend_slope_bu_acre_yr": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Trend Slope (bu/acre/yr)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Trend slope, bu/acre/yr": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Trend, bu/acre/yr": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.bad_county_years": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Bad County Years"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Years 10%+ below trend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Bad years": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.share_bad": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Share Bad"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Share of years below trend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Share of counties 10% or more below trend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.avg_pct_vs_trend": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Avg Pct vs Trend"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% vs trend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.july_rain_in": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "July Rain (in)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "July rain, in": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.days_90f": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Days 90F"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days 90F+": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.trend_yield_bu_acre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Trend Yield (bu/acre)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Trend yield": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "crop_year.corn_share_of_planted": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Crop Year",
+			          "ConceptualProperty": "Corn Share of Planted"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Corn share of planted acres (all years)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Corn share of planted acres": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "weather_in_bad_years.year_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Weather in Bad Years",
+			          "ConceptualProperty": "Year Type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Year type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "weather_in_bad_years.county_years": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Weather in Bad Years",
+			          "ConceptualProperty": "County Years"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "County-years": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "weather_in_bad_years.july_rain": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Weather in Bad Years",
+			          "ConceptualProperty": "July Rain"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "July rain, in": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "weather_in_bad_years.season_rain": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Weather in Bad Years",
+			          "ConceptualProperty": "Season Rain"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "weather_in_bad_years.days_90f": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Weather in Bad Years",
+			          "ConceptualProperty": "Days 90F"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days 90F+": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "weather_in_bad_years.pct_vs_trend": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Weather in Bad Years",
+			          "ConceptualProperty": "Pct vs Trend"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Avg % vs trend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "worst_years.counties_bad": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Worst Years",
+			          "ConceptualProperty": "Counties Bad"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Counties bad": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "worst_years.counties_published": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Worst Years",
+			          "ConceptualProperty": "Counties Published"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Published": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "worst_years.median_pct_vs_trend": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Worst Years",
+			          "ConceptualProperty": "Median Pct vs Trend"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Median % vs trend": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "worst_years.july_rain": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Worst Years",
+			          "ConceptualProperty": "July Rain"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "July rain, in": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "worst_years.days_90f": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Worst Years",
+			          "ConceptualProperty": "Days 90F"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "expected_2026.expected_2026_m_bu": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Expected 2026",
+			          "ConceptualProperty": "Expected 2026 (M bu)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Expected 2026 on trend, M bu": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Expected 2026 (M bu)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

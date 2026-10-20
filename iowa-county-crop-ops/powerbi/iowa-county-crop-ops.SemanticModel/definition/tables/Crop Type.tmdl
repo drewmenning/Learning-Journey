@@ -1,0 +1,20 @@
+/// Lookup of the two crops in the model, Corn and Soybeans.
+table 'Crop Type'
+	lineageTag: 57d84dc1-aadc-4798-ad34-1651a32b4415
+
+	/// Crop name, Corn or Soybeans.
+	column Crop
+		dataType: string
+		isKey
+		lineageTag: 59d95f97-6e27-4074-ade5-4a668a836a0f
+		summarizeBy: none
+		sourceColumn: Crop
+
+	partition 'Crop Type' = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [Crop = text], {{"Corn"}, {"Soybeans"}})
+				in
+				    Source
+

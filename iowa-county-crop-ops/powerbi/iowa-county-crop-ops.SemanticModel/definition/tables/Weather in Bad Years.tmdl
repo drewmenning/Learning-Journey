@@ -1,0 +1,86 @@
+/// Average weather and yield outcomes in bad years versus other years, by crop.
+table 'Weather in Bad Years'
+	lineageTag: 643985f8-fb92-42e9-b22d-ef5a1a88f26e
+
+	/// Crop name, Corn or Soybeans.
+	column Crop
+		dataType: string
+		lineageTag: beca8179-5527-4e57-84c2-41356058707b
+		summarizeBy: none
+		sourceColumn: Crop
+
+	/// Year type grouping, bad years versus other years.
+	column 'Year Type'
+		dataType: string
+		lineageTag: ba4e238b-4f96-4bdf-a479-85839177df5d
+		summarizeBy: none
+		sourceColumn: Year Type
+
+	/// Number of county years in the group.
+	column 'County Years'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: fc0e5aca-1da2-4cef-84ef-6e94aa0beb07
+		summarizeBy: none
+		sourceColumn: County Years
+
+	/// Average July rainfall in inches.
+	column 'July Rain'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 20be38db-a2a4-4916-8403-98d06961099c
+		summarizeBy: none
+		sourceColumn: July Rain
+
+	/// Average April to September rainfall in inches.
+	column 'Season Rain'
+		dataType: double
+		formatString: 0.0
+		lineageTag: ce265058-9b31-49ee-8e0b-8b908671f882
+		summarizeBy: none
+		sourceColumn: Season Rain
+
+	/// Average number of days with a high at or above 90 F.
+	column 'Days 90F'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 2ee35cf4-392f-456b-a648-d9fc64c8cd8f
+		summarizeBy: none
+		sourceColumn: Days 90F
+
+	/// Average growing degree days, base 50 F.
+	column GDD
+		dataType: double
+		formatString: #,##0
+		lineageTag: 86ee8f62-9088-4a81-98ae-a5e6d2fca772
+		summarizeBy: none
+		sourceColumn: GDD
+
+	/// Average ratio of harvested acres to planted acres.
+	column 'Harvested to Planted'
+		dataType: double
+		formatString: 0.000
+		lineageTag: 94ff07c1-8f4b-4524-8cdd-df4281e0a1f5
+		summarizeBy: none
+		sourceColumn: Harvested to Planted
+
+	/// Average yield versus trend in percent points.
+	column 'Pct vs Trend'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 278f6f88-43b7-4541-a9ba-1e8e2d942bb8
+		summarizeBy: none
+		sourceColumn: Pct vs Trend
+
+	partition 'Weather in Bad Years' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\outputs\05_weather_in_bad_years.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"commodity", type text}, {"year_type", type text}, {"county_years", Int64.Type}, {"avg_july_precip_in", type number}, {"avg_season_precip_in", type number}, {"avg_days_90f", type number}, {"avg_gdd50", type number}, {"harvested_to_planted", type number}, {"avg_pct_vs_trend", type number}}),
+				    Proper = Table.TransformColumns(Typed, {{"commodity", Text.Proper, type text}}),
+				    Renamed = Table.RenameColumns(Proper, {{"commodity", "Crop"}, {"year_type", "Year Type"}, {"county_years", "County Years"}, {"avg_july_precip_in", "July Rain"}, {"avg_season_precip_in", "Season Rain"}, {"avg_days_90f", "Days 90F"}, {"avg_gdd50", "GDD"}, {"harvested_to_planted", "Harvested to Planted"}, {"avg_pct_vs_trend", "Pct vs Trend"}})
+				in
+				    Renamed
+

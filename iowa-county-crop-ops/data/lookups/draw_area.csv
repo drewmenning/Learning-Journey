@@ -1,0 +1,8 @@
+county_fips,county_name,shared_boundary_points,role
+19153,POLK,10,center
+19015,BOONE,2,neighbor
+19049,DALLAS,3,neighbor
+19099,JASPER,3,neighbor
+19125,MARION,3,neighbor
+19169,STORY,2,neighbor
+19181,WARREN,3,neighbor

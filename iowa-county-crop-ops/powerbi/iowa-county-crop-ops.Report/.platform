@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "iowa-county-crop-ops"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "14ccd365-546a-54bb-953e-68f87fac241e"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 335.77993820569367,
+            "y": 540.27575745512468
+          },
+          "nodeIndex": "County",
+          "nodeLineageTag": "0fc0c3c1-85d2-4808-878a-c7ed2dde3787",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 622.52942810544,
+            "y": 449.71790069171186
+          },
+          "nodeIndex": "Crop Type",
+          "nodeLineageTag": "57d84dc1-aadc-4798-ad34-1651a32b4415",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 336.35061086345689,
+            "y": 130.5952566043826
+          },
+          "nodeIndex": "Crop Year",
+          "nodeLineageTag": "de8a6945-38f6-4d51-8c63-7c7bf64b0bf4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 705.39273881216741,
+            "y": 605.39647767818383
+          },
+          "nodeIndex": "Expected 2026",
+          "nodeLineageTag": "57363677-c046-45a2-b5ec-c35191576c30",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 623.55117552374736,
+            "y": -50
+          },
+          "nodeIndex": "State Year",
+          "nodeLineageTag": "f9d8cbad-3be3-4ac8-96f7-c0773d26849a",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 161.5277207503583
+          },
+          "nodeIndex": "Weather",
+          "nodeLineageTag": "6d0051cd-079a-42ee-9413-e586d2bc5046",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 991.65446622401589,
+            "y": 652.61941916857734
+          },
+          "nodeIndex": "Weather in Bad Years",
+          "nodeLineageTag": "643985f8-fb92-42e9-b22d-ef5a1a88f26e",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1058.7852409542347,
+            "y": 327.03911013031575
+          },
+          "nodeIndex": "Worst Years",
+          "nodeLineageTag": "b9c0d087-ff72-4a1b-96e1-a817843c7ff6",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
