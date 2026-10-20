@@ -1,4 +1,4 @@
-expression DataFolder = "C:\Users\drewm\dev\iowa-county-crop-ops\data" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+expression DataFolder = "C:\iowa-county-crop-ops\data" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
 	lineageTag: 1e8e1f4c-0c04-455d-91fb-47d64e411b57
 
 	annotation PBI_ResultType = Text
