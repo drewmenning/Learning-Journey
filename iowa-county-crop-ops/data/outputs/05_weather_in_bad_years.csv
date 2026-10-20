@@ -1,0 +1,5 @@
+commodity,year_type,county_years,avg_july_precip_in,avg_season_precip_in,avg_days_90f,avg_gdd50,harvested_to_planted,avg_pct_vs_trend
+CORN,bad,338,2.84,23.01,24.0,3079.0,0.96,-20.2
+CORN,normal,2132,4.28,25.2,13.5,2976.0,0.97,3.2
+SOYBEANS,bad,376,3.06,22.16,19.5,2959.0,0.993,-19.7
+SOYBEANS,normal,2061,4.26,25.43,14.1,2996.0,0.993,3.6

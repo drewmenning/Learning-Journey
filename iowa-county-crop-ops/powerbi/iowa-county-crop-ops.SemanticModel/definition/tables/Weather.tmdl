@@ -1,0 +1,80 @@
+/// Growing season weather by climate division and year.
+table Weather
+	lineageTag: 6d0051cd-079a-42ee-9413-e586d2bc5046
+
+	/// Climate division and year key, for example IAC007-2012.
+	column 'District Year'
+		dataType: string
+		isKey
+		lineageTag: 9dad198c-d6a9-4c31-98cf-352d959b0747
+		summarizeBy: none
+		sourceColumn: District Year
+
+	/// NOAA climate division, IAC001 to IAC009.
+	column 'Climate Division'
+		dataType: string
+		lineageTag: b2c07bbc-caac-4bd9-8945-5783ffe9c3cd
+		summarizeBy: none
+		sourceColumn: Climate Division
+
+	/// Weather year.
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: ceb50ab6-9d73-4f53-b9e3-4140faa8f7ba
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// April to September rainfall in inches.
+	column 'Season Rain'
+		dataType: double
+		formatString: 0.00
+		lineageTag: f0addae5-de24-4e17-874d-5a19d60d692d
+		summarizeBy: none
+		sourceColumn: Season Rain
+
+	/// July rainfall in inches.
+	column 'July Rain'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 43fb19c1-c5d2-4c14-844f-40095a65892c
+		summarizeBy: none
+		sourceColumn: July Rain
+
+	/// Growing degree days, base 50 F.
+	column GDD
+		dataType: double
+		formatString: #,##0
+		lineageTag: 3dea388d-9cdf-4204-9ee8-c9738e8268e4
+		summarizeBy: none
+		sourceColumn: GDD
+
+	/// Number of days with a high at or above 90 F.
+	column 'Days 90F'
+		dataType: int64
+		formatString: 0
+		lineageTag: 36f0f2e7-9985-4adb-9608-623d400ddb87
+		summarizeBy: none
+		sourceColumn: Days 90F
+
+	/// Average daily high in degrees F over the season.
+	column 'Avg High'
+		dataType: double
+		formatString: 0.0
+		lineageTag: d9c59ab0-a5be-4b12-a075-9f3593b3ec7f
+		summarizeBy: none
+		sourceColumn: Avg High
+
+	partition Weather = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\processed\weather_district_season.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"climate_district", type text}, {"climdiv_code", type text}, {"year", Int64.Type}, {"precip_in", type number}, {"july_precip_in", type number}, {"gdd50", type number}, {"days_high_ge_90", Int64.Type}, {"avg_high_f", type number}, {"season_days", Int64.Type}}),
+				    #"District Year" = Table.AddColumn(Typed, "District Year", each [climate_district] & "-" & Text.From([year]), type text),
+				    Renamed = Table.RenameColumns(#"District Year", {{"climate_district", "Climate Division"}, {"year", "Year"}, {"precip_in", "Season Rain"}, {"july_precip_in", "July Rain"}, {"gdd50", "GDD"}, {"days_high_ge_90", "Days 90F"}, {"avg_high_f", "Avg High"}}),
+				    Removed = Table.RemoveColumns(Renamed, {"climdiv_code", "season_days"})
+				in
+				    Removed
+
